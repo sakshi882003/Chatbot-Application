@@ -8,6 +8,9 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import com.chatbot.Chatbot_application.Service.MessageDTO;
+import com.chatbot.Chatbot_application.Service.MsgType;
+
 import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +30,7 @@ public class WebSocketEventlistener {
 			log.info("User disconnected: {}",username);
 			
 			
-			messageOperations.convertAndSend("/topic/chat", message);
+			messageOperations.convertAndSend("/topic/chat", MessageDTO.builder().type(MsgType.LEAVE).sender(username).build());
 			
 		}
 	}
